@@ -50,6 +50,15 @@ app.delete('/api/customer/:customer_id/reservation/:id',  async(req, res, next)=
     }
 });
 
+app.post('/api/customer/:customer_id/reservation', async (req, res, next) => {
+    try {
+      await createReservations({date: req.body.date, party_count: req.body.party_count, customer_id: req.params.customer_id, restaurant_id: req.body.restaurant_id})
+      res.sendStatus(201)
+    } catch (ex) {
+      next(ex)
+    }
+  })
+
 const init = async()=> {
     console.log('connecting to database');
     await client.connect();
